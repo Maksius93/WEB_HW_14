@@ -23,6 +23,14 @@ cloudinary.config(
 
 @router.get("/me/", response_model=UserResponseSchema)
 async def read_users_me(current_user: User = Depends(auth_service.get_current_user)):
+    """
+    The read_users_me function is a GET request that returns the current user's information.
+        It requires authentication, and it uses the auth_service to get the current user.
+
+    :param current_user: User: Get the user object from the auth_service
+    :return: The current user
+    :doc-author: Trelent
+    """
     return current_user
 
 
@@ -30,6 +38,18 @@ async def read_users_me(current_user: User = Depends(auth_service.get_current_us
 async def update_avatar_user(file: UploadFile = File(), current_user: User = Depends(auth_service.get_current_user),
                              db: AsyncSession = Depends(get_db)):
 
+    """
+    The update_avatar_user function is used to update the avatar of a user.
+        The function takes in an UploadFile object, which contains the file that will be uploaded to Cloudinary.
+        It also takes in a User object, which is obtained from auth_service's get_current_user function.
+        Finally it takes in an AsyncSession object, which is obtained from get_db().
+
+    :param file: UploadFile: Get the file from the request
+    :param current_user: User: Get the current user
+    :param db: AsyncSession: Get the database session
+    :return: The updated user
+    :doc-author: Trelent
+    """
     r = cloudinary.uploader.upload(file.file, public_id=f'TODOApp/{current_user.username}', overwrite=True)
 
     src_url = cloudinary.CloudinaryImage(f'TODOApp/{current_user.username}')\

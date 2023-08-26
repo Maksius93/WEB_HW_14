@@ -11,10 +11,27 @@ from src.repository.contacts import get_contacts, create_contact, update_contact
 class TestAsync(unittest.IsolatedAsyncioTestCase):
 
     def setUp(self):
+        """
+        The setUp function is called before each test function.
+        It creates a new session and user object for each test.
+
+        :param self: Represent the instance of the class
+        :return: A mock session and a user object
+        :doc-author: Trelent
+        """
         self.session = AsyncMock(spec=AsyncSession)
         self.user = User(id=1, email="test@tes.com", password="qwerty", confirmed=True)
 
     async def test_get_contacts(self):
+        """
+        The test_get_contacts function tests the get_contacts function.
+        It does this by mocking out the session object and returning a list of mock contacts.
+        The test then asserts that the result of calling get_contacts is equal to expected_contacts.
+
+        :param self: Access the class attributes and methods
+        :return: The expected_contacts list
+        :doc-author: Trelent
+        """
         limit = 10
         offset = 0
         expected_contacts = [Contact(), Contact(), Contact(), Contact()]
@@ -25,6 +42,15 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result, expected_contacts)
 
     async def test_get_all_contacts(self):
+        """
+        The test_get_all_contacts function tests the get_all_contacts function.
+        It does this by mocking out the session object and setting up a mock return value for it.
+        The test then calls get_all_contacts with some arguments, and asserts that the result is what we expect.
+
+        :param self: Represent the instance of the class
+        :return: A list of contacts
+        :doc-author: Trelent
+        """
         limit = 10
         offset = 0
         expected_contacts = [Contact(), Contact(), Contact(), Contact()]
@@ -35,6 +61,15 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result, expected_contacts)
 
     async def test_get_contact(self):
+        """
+        The test_get_contact function tests the get_contact function.
+        It does this by creating a mock contact, and then using that to create a mock session.
+        The test then calls the get_contact function with the mocked session and user, which should return our mocked contact.
+
+        :param self: Represent the instance of the class
+        :return: The contact object
+        :doc-author: Trelent
+        """
         contact = Contact()
         mock_contact = MagicMock()
         mock_contact.scalar_one_or_none.return_value = contact
@@ -43,6 +78,15 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result, contact)
 
     async def test_create_todo(self):
+        """
+        The test_create_todo function tests the create_todo function.
+            It does so by creating a new Todo object with a title and description,
+            then passing that to the create_todo function. The result of this is compared to what we expect.
+
+        :param self: Represent the instance of the object
+        :return: The result of the create_contact function
+        :doc-author: Trelent
+        """
         body = ContactsSchema(name="Test name", surname="Test surname", email="test@email.ue", phone="0568564575", bd="12-05-1996", city="Konotop", notes="Student")
         result = await create_contact(body, self.session, self.user)
         self.assertEqual(result.name, body.name)
@@ -54,6 +98,14 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.notes, body.notes)
 
     async def test_update_todo(self):
+        """
+        The test_update_todo function tests the update_contact function.
+        It creates a mock contact and passes it to the update_contact function, which should return an updated version of that contact.
+
+        :param self: Represent the instance of the object that calls this method
+        :return: A contact with the updated fields
+        :doc-author: Trelent
+        """
         body = ContactsUpdateSchema(name="Test name", surname="Test surname", email="test@email.ue", phone="0568564575", bd="12-05-1996", city="Konotop", notes="Student")
         contact = Contact(name="New name", surname="surname", email="test@ex.com", phone="0448564575", bd="12-08-1996", city="Poltava", notes="notes", user_id=self.user.id)
 
@@ -72,6 +124,15 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.notes, body.notes)
 
     async def test_remove_contact(self):
+        """
+        The test_remove_contact function tests the remove_contact function.
+        It does this by creating a mock contact, and then using that to test the remove_contact function.
+        The result of running the remove_contact function should be equal to our mock contact.
+
+        :param self: Represent the instance of the class
+        :return: The contact that is removed
+        :doc-author: Trelent
+        """
         contact = Contact()
         mock_contact = MagicMock()
         mock_contact.scalar_one_or_none.return_value = contact
