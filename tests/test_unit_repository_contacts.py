@@ -77,14 +77,14 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         result = await get_contact(contact.id, self.session, self.user)
         self.assertEqual(result, contact)
 
-    async def test_create_todo(self):
-        """
-        The test_create_todo function tests the create_todo function.
-            It does so by creating a new Todo object with a title and description,
-            then passing that to the create_todo function. The result of this is compared to what we expect.
+    async def test_create_contact(self):
 
-        :param self: Represent the instance of the object
-        :return: The result of the create_contact function
+        """
+        The test_create_contact function tests the create_contact function.
+            It creates a contact with the given parameters and checks if it was created correctly.
+
+        :param self: Represent the instance of the class
+        :return: A contact with the specified parameters
         :doc-author: Trelent
         """
         body = ContactsSchema(name="Test name", surname="Test surname", email="test@email.ue", phone="0568564575", bd="12-05-1996", city="Konotop", notes="Student")
@@ -97,13 +97,15 @@ class TestAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.city, body.city)
         self.assertEqual(result.notes, body.notes)
 
-    async def test_update_todo(self):
-        """
-        The test_update_todo function tests the update_contact function.
-        It creates a mock contact and passes it to the update_contact function, which should return an updated version of that contact.
+    async def test_update_contact(self):
 
-        :param self: Represent the instance of the object that calls this method
-        :return: A contact with the updated fields
+        """
+        The test_update_contact function tests the update_contact function.
+            The test_update_contact function creates a body, contact and mock object.
+            The test_update_contact function then calls the update contact method with these objects as parameters.
+
+        :param self: Represent the instance of the class
+        :return: The contact object with updated fields
         :doc-author: Trelent
         """
         body = ContactsUpdateSchema(name="Test name", surname="Test surname", email="test@email.ue", phone="0568564575", bd="12-05-1996", city="Konotop", notes="Student")
